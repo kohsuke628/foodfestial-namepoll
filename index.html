@@ -1,49 +1,40 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Food Festivalの店名候補募集</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Noto Sans JP', 'Inter', sans-serif;
-            background-color: #f8fafc;
-            color: #1e293b;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>みんなの空き時間調整</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Lucide Icons (CDN) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="min-h-screen flex flex-col justify-between bg-slate-50 antialiased">
+<body>
+  <header class="app-header">
+    <div class="header-container">
+      <h1 class="app-title"><a href="#/">🕒 スケジュール調整</a></h1>
+      <div id="auth-nav" class="auth-nav">
+        <!-- JSで動的に切り替え -->
+      </div>
+    </div>
+  </header>
 
-    <header class="w-full pt-8 pb-4 px-8 text-center">
-        <div class="inline-block bg-indigo-100 text-indigo-700 text-xl font-semibold px-3 py-1 rounded-full mb-3 tracking-wide">
-            Food Festivel 11/11~11/14 
-        </div>
-        <h1 class="text-2xl font-bold tracking-tight text-slate-900">店名アイデア募集</h1>
-        <p class="text-sm text-slate-500 mt-1">1人一つは必ず候補を出すこと！</p>
-        <p class="text-sm text-slate-800 mt-1 text-xl">何回でも送れるから躊躇わず気軽にアイデアを出しなさい。<br>あなたもチームの一員であることを自覚してね💖</p>
-    </header>
+  <main id="app" class="main-container">
+    <!-- 各画面が動的に描画されます -->
+  </main>
 
-    <main class="flex-1 px-5 flex flex-col items-center justify-center max-w-sm mx-auto w-full">
-        <div class="w-full bg-white rounded-2xl shadow-sm border border-slate-100 p-5 text-center">
-            <p class="text-xs text-slate-400 mb-4 font-medium">下のボックスから候補を入力できます</p>
-            
-            <!-- Answer Garden Microgarden Embed -->
-            <div class="flex justify-center overflow-hidden my-1">
-                <iframe src="https://answergarden.ch/m/5238757" width="303px" height="200px" style="border: none;" scrolling="no" frameborder="0" title="MicroGarden by AnswerGarden" allowTransparency="true"><p><a href="https://answergarden.ch/5238757">Go to Answergarden</a></p></iframe>
-            </div>
+  <!-- モーダルダイアログ用コンテナ -->
+  <div id="modal-container" class="modal-backdrop hidden">
+    <div class="modal-content">
+      <button class="modal-close" id="modal-close-btn">&times;</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
 
-            <p class="text-xs text-slate-400 mt-4 leading-relaxed">
-                思いついた店名やキーワードを自由に入力して送信ボタンを押してネ✨
-            </p>
-        </div>
-    </main>
+  <footer class="app-footer">
+    <p>&copy; 2026 スケジュール調整Webアプリ</p>
+  </footer>
 
-    <footer class="w-full py-6 text-center text-xs text-slate-400">
-        <p>University Festival Planning Team</p>
-    </footer>
-
+  <!-- Firebase & App Script -->
+  <script type="module" src="app.js"></script>
 </body>
 </html>
