@@ -1,0 +1,33 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // surveys コレクションのルール
+    match /surveys/{surveyId} {
+      // 回答者もタイトルや期限等の情報を取得するため公開読み取りを許可
+      allow read: if true;
+      
+      // 作成・更新・削除はログイン済みの所有者(ownerUid)のみ可能
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.ownerUid;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.ownerUid;
+
+      // responses サブコレクションのルール
+      match /responses/{studentId} {
+        // 回答データの閲覧および削除はアンケートの作成者(ownerUid)のみ許可
+        allow read, delete: if request.auth != null && 
+          get(/databases/$(database)/documents/surveys/$(surveyId)).data.ownerUid == request.auth.uid;
+
+        // 作成・更新（回答送信）は期限内かつ上限枠内の場合のみ誰でも許可
+        allow create, update: if isSurveyActive(surveyId, studentId);
+      }
+    }
+
+    function isSurveyActive(surveyId, studentId) {
+      let survey = get(/databases/$(database)/documents/surveys/$(surveyId)).data;
+      let responseExists = exists(/databases/$(database)/documents/surveys/$(surveyId)/responses/$(studentId));
+      
+      return request.time < timestamp.date(survey.deadline) &&
+             (responseExists || survey.maxRespondents == 0 || survey.currentRespondents < survey.maxRespondents);
+    }
+  }
+}
